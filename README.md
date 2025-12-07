@@ -1,2 +1,18 @@
-# taskflow-mobile
-TaskFlow is a cross-platform mobile project management app that helps individuals and small teams manage projects, tasks, and progress efficiently.  Built with React Native, a Node.js backend, and deployed on AWS.
+
+# TaskFlow – Mobile
+
+**TaskFlow — A project by TY Labs**
+
+TaskFlow is a mobile project management app designed for individuals and small teams.
+Users can create projects, manage tasks, track progress, and collaborate through a clean and intuitive interface.
+
+## Tech Stack
+
+- React Native
+- TypeScript
+- State management (to be decided – Context / Redux)
+- REST API (TaskFlow backend)
+
+## Status
+
+Planning & initial setup.
