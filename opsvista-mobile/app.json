@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "taskflow-mobile",
-    "slug": "taskflow-mobile",
+    "name": "opsVista-mobile",
+    "slug": "opsVista-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
