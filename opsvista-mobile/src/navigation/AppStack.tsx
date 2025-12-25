@@ -1,45 +1,73 @@
 // src/navigation/AppStack.tsx
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import ProjectDetailsScreen from "../screens/app/ProjectDetailsScreen";
-import ProjectsScreen from "../screens/app/ ProjectsScreen";
+import EnvironmentsScreen from "../screens/app/EnvironmentsScreen";
+import ServicesScreen from "../screens/app/ServicesScreen";
+import ServiceDetailsScreen from "../screens/app/ServiceDetailsScreen";
 
 export type AppStackParamList = {
-    Projects: undefined;
-    ProjectDetails: { projectId: string };
+    Environments: undefined;
+    Services: { environmentId: string; environmentName: string };
+    ServiceDetails: { serviceId: string };
 };
 
 const Stack = createNativeStackNavigator<AppStackParamList>();
+
+const EnvironmentsRouteScreen: React.FC<any> = (props) => {
+    return (
+        <EnvironmentsScreen
+            {...props}
+            onSelectEnvironment={(env: { id: string; name: string }) =>
+                props.navigation.navigate("Services", {
+                    environmentId: env.id,
+                    environmentName: env.name,
+                })
+            }
+        />
+    );
+};
+
+const ServicesRouteScreen: React.FC<any> = (props) => {
+    const { environmentId, environmentName } = props.route.params;
+    return (
+        <ServicesScreen
+            {...props}
+            environmentId={environmentId}
+            environmentName={environmentName}
+            onOpenService={(serviceId: string) =>
+                props.navigation.navigate("ServiceDetails", { serviceId })
+            }
+        />
+    );
+};
+
+const ServiceDetailsRouteScreen: React.FC<any> = (props) => {
+    const { serviceId } = props.route.params;
+    return <ServiceDetailsScreen {...props} serviceId={serviceId} />;
+};
 
 const AppStack: React.FC = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name="Projects"
-                options={{ title: "TaskFlow" }}
-            >
-                {(props) => (
-                    <ProjectsScreen
-                        {...props}
-                        onOpenProject={(projectId) =>
-                            props.navigation.navigate("ProjectDetails", { projectId })
-                        }
-                    />
-                )}
-            </Stack.Screen>
+                name="Environments"
+                component={EnvironmentsRouteScreen}
+                options={{ title: "OpsVista" }}
+            />
 
             <Stack.Screen
-                name="ProjectDetails"
-                component={ProjectDetailsScreenWrapper}
-                options={{ title: "Project" }}
+                name="Services"
+                component={ServicesRouteScreen}
+                options={({ route }) => ({ title: route.params.environmentName })}
+            />
+
+            <Stack.Screen
+                name="ServiceDetails"
+                component={ServiceDetailsRouteScreen}
+                options={{ title: "Service details" }}
             />
         </Stack.Navigator>
     );
-};
-
-const ProjectDetailsScreenWrapper: React.FC<any> = ({ route }) => {
-    const { projectId } = route.params ?? {};
-    return <ProjectDetailsScreen projectId={projectId} />;
 };
 
 export default AppStack;

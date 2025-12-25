@@ -1,15 +1,28 @@
 // src/screens/auth/RegisterScreen.tsx
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import Screen from "../../components/Screen";
 import { useAppTheme } from "../../theme/ThemeProvider";
+import { AuthStackParamList } from "../../navigation/AuthStack";
 
-type Props = {
-    onGoBackToLogin?: () => void;
-};
+type Props = NativeStackScreenProps<AuthStackParamList, "Register">;
 
-const RegisterScreen: React.FC<Props> = ({ onGoBackToLogin }) => {
+const RegisterScreen: React.FC<Props> = ({ navigation }) => {
     const { theme } = useAppTheme();
+
+    // Optional: keep local state if you plan to submit later
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const goBackToLogin = () => navigation.goBack(); // or navigation.navigate("Login")
+
+    const onSubmit = () => {
+        // TODO: Implement register API call
+        // For now, just go back to login (or show a message)
+        goBackToLogin();
+    };
 
     return (
         <Screen>
@@ -17,12 +30,14 @@ const RegisterScreen: React.FC<Props> = ({ onGoBackToLogin }) => {
                 Create account
             </Text>
             <Text style={[styles.subtitle, { color: theme.colors.mutedText }]}>
-                Start managing your projects with TaskFlow
+                Start managing with OpsVista
             </Text>
 
             <TextInput
                 placeholder="Name"
                 placeholderTextColor={theme.colors.mutedText}
+                value={name}
+                onChangeText={setName}
                 style={[
                     styles.input,
                     {
@@ -35,6 +50,10 @@ const RegisterScreen: React.FC<Props> = ({ onGoBackToLogin }) => {
             <TextInput
                 placeholder="Email"
                 placeholderTextColor={theme.colors.mutedText}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                value={email}
+                onChangeText={setEmail}
                 style={[
                     styles.input,
                     {
@@ -48,6 +67,8 @@ const RegisterScreen: React.FC<Props> = ({ onGoBackToLogin }) => {
                 placeholder="Password"
                 placeholderTextColor={theme.colors.mutedText}
                 secureTextEntry
+                value={password}
+                onChangeText={setPassword}
                 style={[
                     styles.input,
                     {
@@ -59,15 +80,20 @@ const RegisterScreen: React.FC<Props> = ({ onGoBackToLogin }) => {
             />
 
             <TouchableOpacity
-                style={[
-                    styles.primaryButton,
-                    { backgroundColor: theme.colors.primary },
-                ]}
+                style={[styles.primaryButton, { backgroundColor: theme.colors.primary }]}
+                onPress={onSubmit}
+                accessibilityRole="button"
+                accessibilityLabel="Sign up"
             >
                 <Text style={styles.primaryButtonLabel}>Sign up</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.linkButton} onPress={onGoBackToLogin}>
+            <TouchableOpacity
+                style={styles.linkButton}
+                onPress={goBackToLogin}
+                accessibilityRole="button"
+                accessibilityLabel="Back to sign in"
+            >
                 <Text style={[styles.linkLabel, { color: theme.colors.primary }]}>
                     Back to sign in
                 </Text>

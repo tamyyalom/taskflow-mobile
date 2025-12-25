@@ -2,6 +2,7 @@ import React from "react";
 import { Text, TouchableOpacity } from 'react-native';
 import { ThemeProvider, useAppTheme } from "./src/theme/ThemeProvider";
 import RootNavigator from './src/navigation/rootNavigator';
+import { AuthProvider } from "./src/screens/auth/AuthContext";
 
 const ThemeToggle: React.FC = () => {
   const { mode, toggleTheme, theme } = useAppTheme();
@@ -41,7 +42,9 @@ const AppInner: React.FC = () => {
 const App: React.FC = () => {
   return (
     <ThemeProvider>
-      <AppInner />
+      <AuthProvider>
+        <AppInner />
+      </AuthProvider>
     </ThemeProvider>
   );
 };

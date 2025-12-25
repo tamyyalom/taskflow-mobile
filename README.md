@@ -1,10 +1,9 @@
 
-# TaskFlow – Mobile
+# Opsvista – Mobile
 
-**TaskFlow — A project by TY Labs**
+**OpsVista — A project by TY Labs**
 
-TaskFlow is a mobile project management app designed for individuals and small teams.
-Users can create projects, manage tasks, track progress, and collaborate through a clean and intuitive interface.
+OpsVista is an internal operations and monitoring tool for managing system health, environments, and controlled operational actions.
 
 ## Tech Stack
 

@@ -11,30 +11,11 @@ export type AuthStackParamList = {
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
 
-type Props = {
-    onLoginSuccess: () => void;
-};
-
-const AuthStack: React.FC<Props> = ({ onLoginSuccess }) => {
+const AuthStack: React.FC = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Login">
-                {(props) => (
-                    <LoginScreen
-                        {...props}
-                        onLoginSuccess={onLoginSuccess}
-                        onGoToRegister={() => props.navigation.navigate("Register")}
-                    />
-                )}
-            </Stack.Screen>
-            <Stack.Screen name="Register">
-                {(props) => (
-                    <RegisterScreen
-                        {...props}
-                        onGoBackToLogin={() => props.navigation.replace("Login")}
-                    />
-                )}
-            </Stack.Screen>
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
         </Stack.Navigator>
     );
 };
