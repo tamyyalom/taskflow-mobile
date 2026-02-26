@@ -32,15 +32,17 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
             setError(null);
 
             await login(email, password);
-        } catch (e: unknown) {
-            console.error("Login failed", e);
-
-            const msg =
-                (e as any)?.response?.data?.error ??
-                (e instanceof Error ? e.message : null) ??
-                "Login failed. Please try again.";
-
-            setError(msg);
+        } catch (e: any) {
+            console.log("Login failed status:", e?.response?.status);
+            console.log("Login failed data:", e?.response?.data);
+            console.log("Login failed headers:", e?.response?.headers);
+            setError(
+                e?.response?.data?.error ??
+                e?.response?.data?.message ??
+                (typeof e?.response?.data === "string" ? e.response.data : null) ??
+                e?.message ??
+                "Login failed. Please try again."
+            );
         } finally {
             setLoading(false);
         }
